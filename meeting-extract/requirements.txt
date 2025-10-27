@@ -1,0 +1,135 @@
+# requirements.txt
+streamlit==1.28.0
+openai==0.28.1
+python-multipart==0.0.6
+
+# setup_instructions.md
+
+# Meeting Notes Extractor Setup Instructions
+
+## Prerequisites
+- Python 3.8 or higher
+- OpenAI API key
+
+## Installation
+
+1. **Clone or download the code**
+   ```bash
+   # Save the main Python code as 'meeting_notes_app.py'
+   ```
+
+2. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Get OpenAI API Key**
+   - Go to https://platform.openai.com/api-keys
+   - Create a new secret key
+   - Copy the key (you'll enter it in the app)
+
+## Running the Application
+
+1. **Start the Streamlit app**
+   ```bash
+   streamlit run meeting_notes_app.py
+   ```
+
+2. **Open your browser**
+   - The app will automatically open at `http://localhost:8501`
+   - If not, manually navigate to that URL
+
+3. **Configure API Key**
+   - Enter your OpenAI API key in the sidebar
+   - The key is not stored permanently for security
+
+## Usage
+
+1. **Upload Audio File**
+   - Supported formats: MP3, WAV, M4A, FLAC, OGG
+   - Maximum file size: 25MB (adjustable in settings)
+
+2. **Process Audio**
+   - Click "Process Audio" button
+   - Wait for transcription and analysis to complete
+
+3. **View Results**
+   - Meeting summary with key details
+   - Detailed notes organized by topic
+   - Action items prioritized by importance
+   - Full transcript available in expandable section
+
+4. **Download Reports**
+   - Download full report as text file
+   - Download structured data as JSON
+
+## Features
+
+✅ **Audio Transcription** - Uses OpenAI Whisper API
+✅ **AI Analysis** - Uses GPT-4 for structured extraction
+✅ **Performance Metrics** - Shows processing times
+✅ **Priority Management** - Color-coded action items
+✅ **Multiple Downloads** - Text and JSON formats
+✅ **Responsive UI** - Works on desktop and mobile
+✅ **Real-time Progress** - Loading indicators during processing
+
+## Cost Considerations
+
+- **Whisper API**: ~$0.006 per minute of audio
+- **GPT-4 API**: ~$0.03 per 1K tokens (varies by transcript length)
+- **Example**: 30-minute meeting ≈ $0.50-$2.00 total cost
+
+## Troubleshooting
+
+**"Module not found" errors:**
+```bash
+pip install --upgrade streamlit openai
+```
+
+**API key issues:**
+- Ensure your OpenAI account has credits
+- Check API key is correctly entered
+- Verify internet connection
+
+**Large file uploads:**
+- Compress audio files before uploading
+- Use MP3 format for smaller file sizes
+- Consider splitting very long meetings
+
+**Poor transcription quality:**
+- Ensure clear audio with minimal background noise
+- Use a good quality microphone for recordings
+- Consider noise reduction before uploading
+
+## Deployment Options
+
+**Local Development:**
+- Run on your computer with `streamlit run meeting_notes_app.py`
+
+**Streamlit Cloud:**
+- Push code to GitHub
+- Deploy for free at https://share.streamlit.io
+
+**Docker Deployment:**
+```dockerfile
+FROM python:3.9-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+EXPOSE 8501
+CMD ["streamlit", "run", "meeting_notes_app.py"]
+```
+
+## Security Notes
+
+- API keys are entered per session (not stored)
+- Audio files are processed temporarily and not saved
+- Consider using environment variables for production API keys
+
+## Customization
+
+**Modify GPT prompt** in `extract_structured_data()` function
+**Adjust UI styling** in the CSS section
+**Add new features** like speaker identification or sentiment analysis
+**Export formats** can be extended (PDF, Word, etc.)
